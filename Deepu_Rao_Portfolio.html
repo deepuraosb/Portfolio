@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepu Rao S B — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0b;
+  --bg2: #111114;
+  --bg3: #18181d;
+  --gold: #d4a547;
+  --gold-dim: #8a6a2a;
+  --gold-glow: rgba(212,165,71,0.15);
+  --white: #f0ece4;
+  --muted: #6b6872;
+  --muted2: #9996a3;
+  --border: rgba(212,165,71,0.15);
+  --display: 'Bebas Neue', sans-serif;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --body: 'Syne', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+  opacity: 0.5;
+}
+body:hover .cursor { opacity: 1; }
+
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.6;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(10,10,11,0.9), transparent);
+  backdrop-filter: blur(2px);
+}
+.nav-logo {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+.nav-links { display: flex; gap: 36px; }
+.nav-links a {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212,165,71,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,165,71,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at 60% 40%, black 30%, transparent 70%);
+}
+
+.hero-orb {
+  position: absolute;
+  top: -10%; right: -5%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(ellipse, rgba(212,165,71,0.08) 0%, transparent 65%);
+  pointer-events: none;
+  animation: breathe 8s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero-title {
+  font-family: var(--display);
+  font-size: clamp(5rem, 12vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.4s forwards;
+}
+
+.hero-title .italic {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 0.7em;
+  display: block;
+}
+
+.hero-sub {
+  max-width: 480px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--muted2);
+  margin-bottom: 44px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.6s forwards;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.8s forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: var(--body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: all 0.3s;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-primary:hover {
+  background: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(212,165,71,0.3);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--white); }
+
+.hero-stats {
+  position: absolute;
+  right: 48px;
+  bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-end;
+  opacity: 0;
+  animation: fadeLeft 0.9s 1s forwards;
+}
+
+.stat {
+  text-align: right;
+}
+.stat-num {
+  font-family: var(--display);
+  font-size: 2.8rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 1s 1.4s forwards;
+}
+.scroll-hint span {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* SECTIONS */
+section { position: relative; }
+
+.section-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* ABOUT */
+.about {
+  padding: 140px 0;
+  background: var(--bg2);
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.about-heading {
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  margin-bottom: 32px;
+}
+
+.about-heading .gold { color: var(--gold); }
+
+.about-text {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--muted2);
+  margin-bottom: 20px;
+}
+
+.about-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.about-card {
+  background: var(--bg3);
+  padding: 28px;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.about-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.about-card:hover::before { transform: scaleX(1); }
+.about-card:hover { border-color: rgba(212,165,71,0.35); transform: translateY(-2px); }
+
+.card-icon {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.card-val {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  color: var(--white);
+  line-height: 1;
+}
+.card-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* EXPERIENCE */
+.experience {
+  padding: 140px 0;
+  background: var(--bg);
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 80px;
+}
+
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 0.9;
+}
+.section-title .dim { color: var(--muted); }
+
+.exp-timeline {
+  position: relative;
+}
+
+.exp-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+.exp-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 60px;
+  padding: 0 0 64px 48px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+.exp-item.visible { opacity: 1; transform: translateY(0); }
+
+.exp-item::before {
+  content: '';
+  position: absolute;
+  left: -4px; top: 6px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 20px var(--gold);
+}
+
+.exp-date {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-top: 4px;
+}
+
+.exp-company {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.exp-role {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exp-bullets li {
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--muted2);
+  padding-left: 18px;
+  position: relative;
+}
+.exp-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10px;
+  width: 6px; height: 1px;
+  background: var(--gold);
+}
+
+/* PROJECTS */
+.projects {
+  padding: 140px 0;
+  background: var(--bg2);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 80px;
+}
+
+.project-card {
+  background: var(--bg3);
+  padding: 40px 36px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: border-color 0.4s;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s, transform 0.5s, border-color 0.3s;
+}
+.project-card.visible { opacity: 1; transform: translateY(0); }
+.project-card:nth-child(2) { transition-delay: 0.1s; }
+.project-card:nth-child(3) { transition-delay: 0.2s; }
+.project-card:nth-child(4) { transition-delay: 0.15s; }
+.project-card:nth-child(5) { transition-delay: 0.25s; }
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--gold-glow), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+.project-card:hover::after { opacity: 1; }
+.project-card:hover { border-color: rgba(212,165,71,0.3); }
+
+.project-num {
+  font-family: var(--display);
+  font-size: 3rem;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.project-year {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.project-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.project-desc {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--muted2);
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 20px;
+}
+.project-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  border: 1px solid rgba(212,165,71,0.2);
+  padding: 3px 8px;
+}
+
+/* SKILLS */
+.skills {
+  padding: 140px 0;
+  background: var(--bg);
+}
+
+.skills-inner {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 80px;
+}
+
+.skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.skill-group-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted2);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  transition: all 0.25s;
+}
+.skill-pill:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(212,165,71,0.06);
+  transform: translateY(-1px);
+}
+
+.certs-awards {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.award-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+.award-row:hover { border-color: rgba(212,165,71,0.3); }
+
+.award-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.award-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.award-from {
+  font-size: 0.73rem;
+  color: var(--muted2);
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.cert-item {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 18px 20px;
+  font-size: 0.75rem;
+  color: var(--muted2);
+  line-height: 1.45;
+  transition: color 0.2s, border-color 0.2s;
+}
+.cert-item:hover { color: var(--white); border-color: rgba(212,165,71,0.3); }
+
+/* EDUCATION */
+.education {
+  padding: 100px 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+
+.edu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 60px;
+}
+
+.edu-card {
+  background: var(--bg3);
+  padding: 40px;
+  border: 1px solid var(--border);
+}
+.edu-year-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gold);
+  padding: 4px 10px;
+  margin-bottom: 20px;
+}
+.edu-degree {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--white);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.edu-school {
+  font-size: 0.78rem;
+  color: var(--muted2);
+}
+
+/* CONTACT / FOOTER */
+.contact {
+  padding: 140px 0 100px;
+  background: var(--bg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact::before {
+  content: 'HIRE ME';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--display);
+  font-size: 22vw;
+  color: rgba(212,165,71,0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+
+.contact-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.contact-heading {
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.9;
+  margin-bottom: 24px;
+}
+
+.contact-sub {
+  font-size: 0.9rem;
+  color: var(--muted2);
+  margin-bottom: 48px;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 14px 24px;
+  transition: all 0.3s;
+}
+.contact-link:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212,165,71,0.06);
+}
+
+.footer-bar {
+  padding: 24px 48px;
+  background: var(--bg2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.lang-row {
+  display: flex;
+  gap: 16px;
+}
+.lang-item {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* DIVIDERS */
+.ticker {
+  overflow: hidden;
+  background: var(--gold);
+  padding: 10px 0;
+  white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-block;
+  animation: ticker 20s linear infinite;
+}
+.ticker-inner span {
+  font-family: var(--display);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--bg);
+  margin: 0 32px;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">DR</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+
+  <div class="hero-eyebrow">Technical Support Engineer · Global Exchange Operations</div>
+
+  <h1 class="hero-title">
+    Deepu
+    <span class="italic">Rao S B</span>
+  </h1>
+
+  <p class="hero-sub">
+    6+ years turning complex technical problems into seamless customer experiences.
+    Building tools, configuring systems, and leading exchange operations across global regions at Dell.
+  </p>
+
+  <div class="hero-cta">
+    <a href="#contact" class="btn-primary">
+      Get in Touch
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <a href="#experience" class="btn-ghost">
+      View Work
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3×</div>
+      <div class="stat-label">Industry Awards</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Languages Spoken</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Technical Support</span><span>·</span>
+    <span>Global Exchange Operations</span><span>·</span>
+    <span>Hardware Configuration</span><span>·</span>
+    <span>Web Development</span><span>·</span>
+    <span>Power BI</span><span>·</span>
+    <span>Salesforce</span><span>·</span>
+    <span>Python</span><span>·</span>
+    <span>Customer Experience</span><span>·</span>
+    <span>Technical Support</span><span>·</span>
+    <span>Global Exchange Operations</span><span>·</span>
+    <span>Hardware Configuration</span><span>·</span>
+    <span>Web Development</span><span>·</span>
+    <span>Power BI</span><span>·</span>
+    <span>Salesforce</span><span>·</span>
+    <span>Python</span><span>·</span>
+    <span>Customer Experience</span><span>·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-wrap">
+    <div class="about-inner">
+      <div class="about-left">
+        <div class="about-label">About Me</div>
+        <h2 class="about-heading">Support<br>Engineer &amp;<br><span class="gold">Builder</span></h2>
+        <p class="about-text">
+          Based in Bangalore, I specialize in global exchange operations — processing device replacements, configuring systems, and creating the internal tools that make operations run smoother across North America and EMEA.
+        </p>
+        <p class="about-text">
+          Beyond the helpdesk, I build: from specification websites used by entire global teams, to checklist tools that standardize returns workflows. I bring a developer's mindset to technical support.
+        </p>
+      </div>
+      <div class="about-right">
+        <div class="about-card">
+          <div class="card-icon">🏆</div>
+          <div class="card-title">Awards</div>
+          <div class="card-val">3×</div>
+          <div class="card-sub">Game Changer + VOC Champion</div>
+        </div>
+        <div class="about-card">
+          <div class="card-icon">🌍</div>
+          <div class="card-title">Regions</div>
+          <div class="card-val">NA + EMEA</div>
+          <div class="card-sub">Global Exchange Operations</div>
+        </div>
+        <div class="about-card">
+          <div class="card-icon">💻</div>
+          <div class="card-title">Systems Built</div>
+          <div class="card-val">1000s</div>
+          <div class="card-sub">Via DSA configuration tool</div>
+        </div>
+        <div class="about-card">
+          <div class="card-icon">📚</div>
+          <div class="card-title">Education</div>
+          <div class="card-val">MCA</div>
+          <div class="card-sub">Master of Computer Application</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="section-wrap">
+    <div class="exp-header">
+      <div>
+        <h2 class="section-title">Work<br><span class="dim">History</span></h2>
+      </div>
+    </div>
+    <div class="exp-timeline">
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-date">Apr 2025 – Present</div>
+          <div class="exp-company">Dell International Services</div>
+        </div>
+        <div>
+          <div class="exp-role">Technical Support Engineer I — Global Exchange Operations</div>
+          <ul class="exp-bullets">
+            <li>Lead processing of device exchanges for laptops, desktops, and monitors across North America and EMEA.</li>
+            <li>Develop and maintain internal tools and websites using HTML, CSS, and JavaScript to standardize exchange and returns workflows.</li>
+            <li>Build and configure systems using Dell's DSA tool; identify compatible refurbished configurations to match customer specs.</li>
+            <li>Manage daily caseload and follow-ups, ensuring timely delivery and high CSAT scores.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-date">Apr 2022 – Mar 2025</div>
+          <div class="exp-company">Dell International Services</div>
+        </div>
+        <div>
+          <div class="exp-role">Senior Technician — Technical Support Engineer</div>
+          <ul class="exp-bullets">
+            <li>Processed exchanges for laptops, desktops, and monitors per regional policies; validated technical issues and processed refunds.</li>
+            <li>Sourced refurbished system configurations aligned with original purchase specifications.</li>
+            <li>Minimized DSAT by proactively understanding expectations; submitted open case reports to team leads.</li>
+            <li>Earned Game Changer Awards from Senior Manager and Senior Director for exceptional contributions.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-date">Jan 2020 – Apr 2022</div>
+          <div class="exp-company">Concentrix · Client: Lenovo</div>
+        </div>
+        <div>
+          <div class="exp-role">Advisor I — Technical Support</div>
+          <ul class="exp-bullets">
+            <li>Handled 25+ technical support cases daily via phone, email, and chat for Lenovo customers globally.</li>
+            <li>Diagnosed and resolved hardware, software, and network issues following structured troubleshooting methodology.</li>
+            <li>Recognized as Best VOC Champion for Exceptional Customer Experience at the Lenovo Awards Forum.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-wrap">
+    <h2 class="section-title">Selected<br><span class="dim">Projects</span></h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-num">01</div>
+        <div class="project-year">Mar 2026</div>
+        <div class="project-name">NA System Exchange &amp; Technical Returns Policy</div>
+        <p class="project-desc">Comprehensive policy documentation for system exchanges and technical returns across North America, establishing standardized procedures for global operations teams.</p>
+        <div class="project-tags">
+          <span class="project-tag">Policy</span>
+          <span class="project-tag">North America</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">02</div>
+        <div class="project-year">Oct 2025</div>
+        <div class="project-name">Technical Returns &amp; Exchange Checklists</div>
+        <p class="project-desc">Standardized checklists for technical returns and system exchanges used by operations teams across North America and EMEA regions, reducing processing errors.</p>
+        <div class="project-tags">
+          <span class="project-tag">NA</span>
+          <span class="project-tag">EMEA</span>
+          <span class="project-tag">Operations</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">03</div>
+        <div class="project-year">Aug 2025</div>
+        <div class="project-name">System Exchange Checklist — North America</div>
+        <p class="project-desc">Purpose-built exchange checklist tool for North American operations, streamlining case processing and ensuring compliance with regional exchange policies.</p>
+        <div class="project-tags">
+          <span class="project-tag">Tooling</span>
+          <span class="project-tag">North America</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">04</div>
+        <div class="project-year">Feb 2025</div>
+        <div class="project-name">Replacement System Specifications Website</div>
+        <p class="project-desc">Built an internal website using HTML, CSS, and JavaScript to display clean replacement product specs globally. Highlights upgrade/downgrade options across all regions, free of unnecessary clutter.</p>
+        <div class="project-tags">
+          <span class="project-tag">HTML</span>
+          <span class="project-tag">CSS</span>
+          <span class="project-tag">JavaScript</span>
+          <span class="project-tag">Global</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">05</div>
+        <div class="project-year">Oct 2024</div>
+        <div class="project-name">System Progression Website</div>
+        <p class="project-desc">Web application to track availability of new and refurbished systems, enabling comprehensive real-time assessment of system accessibility and condition for the exchange operations team.</p>
+        <div class="project-tags">
+          <span class="project-tag">Web App</span>
+          <span class="project-tag">Inventory</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="section-wrap">
+    <h2 class="section-title" style="margin-bottom: 60px;">Skills &amp;<br><span class="dim">Expertise</span></h2>
+    <div class="skills-inner">
+      <div class="skill-groups">
+
+        <div>
+          <div class="skill-group-title">Programming Languages</div>
+          <div class="skill-list">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">JavaScript</span>
+            <span class="skill-pill">Java</span>
+            <span class="skill-pill">C / C++</span>
+            <span class="skill-pill">ASP.NET</span>
+            <span class="skill-pill">Visual Basic</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="skill-group-title">Web Development</div>
+          <div class="skill-list">
+            <span class="skill-pill">HTML5</span>
+            <span class="skill-pill">CSS3</span>
+            <span class="skill-pill">JavaScript</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="skill-group-title">Databases</div>
+          <div class="skill-list">
+            <span class="skill-pill">SQL Server 2014</span>
+            <span class="skill-pill">NoSQL</span>
+            <span class="skill-pill">MS Access</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="skill-group-title">Tools & Platforms</div>
+          <div class="skill-list">
+            <span class="skill-pill">Power BI</span>
+            <span class="skill-pill">Git / GitHub</span>
+            <span class="skill-pill">MCP</span>
+            <span class="skill-pill">VS Code</span>
+            <span class="skill-pill">Visual Studio</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="skill-group-title">CRM Systems</div>
+          <div class="skill-list">
+            <span class="skill-pill">Salesforce (SFDC)</span>
+            <span class="skill-pill">SAP CRM</span>
+            <span class="skill-pill">MS Dynamics</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="skill-group-title">Infrastructure</div>
+          <div class="skill-list">
+            <span class="skill-pill">Hardware Config</span>
+            <span class="skill-pill">Networking</span>
+            <span class="skill-pill">Windows OS</span>
+            <span class="skill-pill">Linux</span>
+            <span class="skill-pill">DSA Tool</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="certs-awards">
+
+        <div>
+          <div class="skill-group-title" style="margin-bottom: 14px;">Awards &amp; Recognition</div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <div class="award-row">
+              <div class="award-icon">🏆</div>
+              <div>
+                <div class="award-title">Game Changer Award — Senior Manager</div>
+                <div class="award-from">Dell International Services India Pvt Ltd</div>
+              </div>
+            </div>
+            <div class="award-row">
+              <div class="award-icon">🏆</div>
+              <div>
+                <div class="award-title">Game Changer Award — Senior Director</div>
+                <div class="award-from">Dell International Services India Pvt Ltd</div>
+              </div>
+            </div>
+            <div class="award-row">
+              <div class="award-icon">⭐</div>
+              <div>
+                <div class="award-title">Best VOC Champion</div>
+                <div class="award-from">Lenovo Awards Forum — Exceptional Customer Experience</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="skill-group-title" style="margin-bottom: 14px;">Certifications</div>
+          <div class="cert-grid">
+            <div class="cert-item">Essential Training on NoSQL<br><span style="color:var(--muted); font-size:0.68rem;">LinkedIn Learning</span></div>
+            <div class="cert-item">Python for Non-Programmers<br><span style="color:var(--muted); font-size:0.68rem;">LinkedIn Learning</span></div>
+            <div class="cert-item">Web Design &amp; Development<br><span style="color:var(--muted); font-size:0.68rem;">LinkedIn Learning</span></div>
+            <div class="cert-item">Essential Training on Power BI<br><span style="color:var(--muted); font-size:0.68rem;">LinkedIn Learning</span></div>
+            <div class="cert-item" style="grid-column: span 2;">Jetking Certified Hardware &amp; Networking Engineer + Cloud</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education" id="education">
+  <div class="section-wrap">
+    <h2 class="section-title">Education</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <span class="edu-year-badge">2024</span>
+        <div class="edu-degree">Master of Computer Application</div>
+        <div class="edu-school">Sambhram Academy of Management Studies</div>
+      </div>
+      <div class="edu-card">
+        <span class="edu-year-badge">2020</span>
+        <div class="edu-degree">Bachelor of Computer Application</div>
+        <div class="edu-school">Bapu Degree College</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-wrap">
+    <div class="contact-label">Let's Connect</div>
+    <h2 class="contact-heading">GET IN<br>TOUCH</h2>
+    <p class="contact-sub">Open to new opportunities in technical support, operations, and web development.</p>
+    <div class="contact-links">
+      <a href="mailto:deepurao.17@gmail.com" class="contact-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        deepurao.17@gmail.com
+      </a>
+      <a href="tel:+919845660607" class="contact-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.69a2 2 0 012-2.19h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 6.91a16 16 0 006 6z"/></svg>
+        +91 98456 60607
+      </a>
+      <a href="https://linkedin.com/in/deepu-rao" class="contact-link" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn Profile
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-bar">
+  <div class="footer-copy">© 2026 Deepu Rao S B · Bangalore, India</div>
+  <div class="lang-row">
+    <span class="lang-item">English</span>
+    <span class="lang-item">Hindi</span>
+    <span class="lang-item">Kannada</span>
+    <span class="lang-item">Marathi</span>
+    <span class="lang-item">Tamil</span>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Project card glow on mouse move
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width * 100).toFixed(1);
+      const y = ((e.clientY - r.top) / r.height * 100).toFixed(1);
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.exp-item, .project-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
